@@ -61,10 +61,10 @@ class Utils: NSObject {
       var muteValues: (current: UInt16, max: UInt16)?
 
       os_log("Polling %{public}@ times", type: .info, String(tries))
-      //os_log("%{public}@ (%{public}@):", type: .info, display.name, String(reflecting: DDCCommand.AUDIO_MUTE))
+      // os_log("%{public}@ (%{public}@):", type: .info, display.name, String(reflecting: DDCCommand.AUDIO_MUTE))
 
       if tries != 0 {
-        //muteValues = display.readDDCValues(for: .AUDIO_MUTE, tries: tries, minReplyDelay: delay)
+        muteValues = display.readDDCValues(for: .AUDIO_MUTE, tries: tries, minReplyDelay: delay)
       }
 
       if let muteValues = muteValues {

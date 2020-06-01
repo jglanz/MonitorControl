@@ -1,5 +1,6 @@
 import Cocoa
 import DDC
+import os.log
 
 class SliderHandler {
   var slider: NSSlider?
@@ -30,7 +31,7 @@ class SliderHandler {
 
     // If the command is to adjust brightness, also instruct the display to set the contrast value, if necessary
     if self.cmd == .BRIGHTNESS {
-      self.display.setContrastValueForBrightness(value)
+      // self.display.setContrastValueForBrightness(value)
     }
 
     // If the command is to adjust contrast, erase the previous value for the contrast to restore after brightness is increased
@@ -39,9 +40,12 @@ class SliderHandler {
     }
 
     let ddcCmd = DDCWriteCommand()
-    ddcCmd.controlId = Int(self.cmd.rawValue)
-    ddcCmd.newValue = value
-    _ = DDCManager().write(ddcCmd, for: self.display.identifier)// self.display.ddc?.write(command: self.cmd, value: UInt16(value))
+    ddcCmd.controlId = UInt32(self.cmd.rawValue)
+    ddcCmd.newValue = UInt32(value)
+    guard DDCManager().write(ddcCmd, for: self.display.ddc) else { // self.display.ddc?.write(command: self.cmd, value: UInt16(value))
+      os_log("Unable to set ddc value")
+      return
+    }
     self.display.saveValue(value, for: self.cmd)
   }
 }

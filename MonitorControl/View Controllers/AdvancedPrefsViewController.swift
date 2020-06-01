@@ -9,7 +9,7 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
   var toolbarItemImage: NSImage? = NSImage(named: NSImage.advancedName)
   let prefs = UserDefaults.standard
 
-  var displays: [DDCDisplay] = []
+  var displays: [Display] = []
 
   enum DisplayColumn: Int {
     case friendlyName
@@ -60,7 +60,7 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
   }
 
   @objc func loadDisplayList() {
-    self.displays = DDCManager().getDisplays() as! [DDCDisplay]// DisplayManager.shared.getDdcCapableDisplays()
+    self.displays = DisplayManager.shared.getDdcCapableDisplays()
     self.displayList.reloadData()
   }
 
@@ -75,7 +75,7 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
       return nil
     }
     let display = self.displays[row]
-    //let pollingMode = display.getPollingMode()
+    // let pollingMode = display.getPollingMode()
 
     switch column {
     case .pollingMode:
@@ -97,13 +97,13 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
       }
     case .longerDelay:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? LongerDelayCellView {
-        cell.button.state = .on// display.needsLongerDelay ? .on : .off
+        cell.button.state = .on // display.needsLongerDelay ? .on : .off
         cell.display = display
         return cell
       }
     case .hideOsd:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? HideOsdCellView {
-        cell.button.state = .on//display.hideOsd ? .on : .off
+        cell.button.state = .on // display.hideOsd ? .on : .off
         cell.display = display
         return cell
       }
@@ -116,12 +116,12 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
     return nil
   }
 
-  private func getText(for column: DisplayColumn, with display: DDCDisplay) -> String {
+  private func getText(for column: DisplayColumn, with display: Display) -> String {
     switch column {
     case .friendlyName:
       return display.name
     case .identifier:
-      return "\(display.index)"
+      return "\(display.identifier)"
     default:
       return ""
     }

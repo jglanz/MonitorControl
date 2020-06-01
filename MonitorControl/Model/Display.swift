@@ -10,8 +10,9 @@ import DDC
 import Foundation
 
 class Display {
-  internal let identifier: DDCDisplay
-  internal let name: String
+  internal var identifier: Int32
+  internal let ddc: DDCDisplay?
+  internal var name: String
   internal var vendorNumber: UInt32?
   internal var modelNumber: UInt32?
   internal var isEnabled: Bool {
@@ -25,11 +26,21 @@ class Display {
 
   private let prefs = UserDefaults.standard
 
-  internal init(_ identifier: DDCDisplay, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
-    self.identifier = identifier
-    self.name = name
-    self.vendorNumber = vendorNumber
-    self.modelNumber = modelNumber
+  internal init(_ ddc: DDCDisplay?) {
+    if let ddc = ddc {
+      self.identifier = Int32(ddc.index)
+      self.ddc = ddc
+      self.name = ddc.name
+      self.vendorNumber = ddc.vendorId
+      self.modelNumber = ddc.productId
+    } else {
+//      != nil
+      self.identifier = -1
+      self.ddc = nil
+      self.name = "Internal Display"
+      self.vendorNumber = 0
+      self.modelNumber = 0
+    }
   }
 
   func stepBrightness(isUp _: Bool, isSmallIncrement _: Bool) {}
@@ -42,10 +53,10 @@ class Display {
     return self.prefs.string(forKey: "friendlyName-\(self.identifier)") ?? self.name
   }
 
-  func showOsd(command: UInt8, value: Int, maxValue: Int = 100) {
-    guard let manager = OSDManager.sharedManager() as? OSDManager else {
-      return
-    }
+  func showOsd(command _: DDCCommand, value _: Int, maxValue _: Int = 100) {
+//    guard let manager = OSDManager.sharedManager() as? OSDManager else {
+//      return
+//    }
 
 //    var osdImage: Int64!
 //    switch command {

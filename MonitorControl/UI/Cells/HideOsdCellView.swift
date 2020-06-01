@@ -1,18 +1,18 @@
 import Cocoa
-import os.log
 import DDC
+import os.log
 
 class HideOsdCellView: NSTableCellView {
   @IBOutlet var button: NSButton!
-  var display: DDCDisplay?
+  var display: Display?
   let prefs = UserDefaults.standard
 
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
   }
 
-  @IBAction func buttonToggled(_ sender: NSButton) {
-    if let display = display {
+  @IBAction func buttonToggled(_: NSButton) {
+//    if let display = display {
 //      switch sender.state {
 //      case .on:
 //        display.hideOsd = true
@@ -21,6 +21,6 @@ class HideOsdCellView: NSTableCellView {
 //      default:
 //        break
 //      }
-    }
+//    }
   }
 }

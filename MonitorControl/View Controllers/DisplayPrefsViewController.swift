@@ -9,7 +9,7 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
   var toolbarItemImage: NSImage? = NSImage(named: NSImage.computerName)
   let prefs = UserDefaults.standard
 
-  var displays: [DDCDisplay] = []
+  var displays: [Display] = []
 
   enum DisplayColumn: Int {
     case checkbox
@@ -56,7 +56,7 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
   // MARK: - Table datasource
 
   @objc func loadDisplayList() {
-    self.displays = DDCManager().getDisplays() as! [DDCDisplay] //DisplayManager.shared.getAllDisplays()
+    self.displays = DisplayManager.shared.getAllDisplays()
     self.displayList.reloadData()
   }
 
@@ -78,14 +78,14 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
     case .checkbox:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? ButtonCellView {
         cell.display = display
-        cell.button.state = .on// display.isEnabled ? .on : .off
+        cell.button.state = .on // display.isEnabled ? .on : .off
         return cell
       }
     case .ddc:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? ButtonCellView {
         cell.display = display
-        //cell.button.state = DDC(for: display.identifier) != nil ? .on : .off
-        cell.button.state = .on// display.isEnabled ? .on : .off
+        // cell.button.state = DDC(for: display.identifier) != nil ? .on : .off
+        cell.button.state = .on // display.isEnabled ? .on : .off
         cell.button.isEnabled = false
         return cell
       }
@@ -106,16 +106,16 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
     return nil
   }
 
-  private func getText(for column: DisplayColumn, with display: DDCDisplay) -> String {
+  private func getText(for column: DisplayColumn, with display: Display) -> String {
     switch column {
     case .name:
       return display.name
     case .identifier:
-      return "\(display.index)"
+      return "\(display.identifier)"
     case .vendor:
-      return "\(display.vendorId)"
+      return "\(display.vendorNumber)"
     case .model:
-      return "\(display.productId)"
+      return "\(display.modelNumber)"
     default:
       return ""
     }

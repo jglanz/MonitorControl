@@ -23,7 +23,7 @@ class DisplayManager {
 
   func getDdcCapableDisplays() -> [ExternalDisplay] {
     return self.displays.compactMap { (display) -> ExternalDisplay? in
-      if let externalDisplay = display as? ExternalDisplay, externalDisplay.identifier != nil {
+      if let externalDisplay = display as? ExternalDisplay {
         return externalDisplay
       } else { return nil }
     }
@@ -34,8 +34,7 @@ class DisplayManager {
   }
 
   func getCurrentDisplay() -> Display? {
-   let mainDisplayID = 0
-    return self.displays.first { $0.identifier.index == mainDisplayID }
+    return self.displays.first { $0 is ExternalDisplay }
   }
 
   func addDisplay(display: Display) {

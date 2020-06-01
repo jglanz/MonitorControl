@@ -83,19 +83,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func updateDisplays() {
     self.clearDisplays()
 
-    for display in (DDCManager().getDisplays() as! [DDCDisplay?]) {
-      if display != nil {
-      let name = display!.name// screen.displayName ?? NSLocalizedString("Unknown", comment: "Unknown display name")
-      let id = display!.index
-      let vendorNumber = display!.vendorId
-        let modelNumber = display!.productId
-      let screen: Display
-//      if screen.isBuiltin {
-//        display = InternalDisplay(id, name: name, vendorNumber: vendorNumber, modelNumber: modelNumber)
-//      } else {
-        screen = ExternalDisplay(display!, name: name!, vendorNumber: UInt32(vendorNumber), modelNumber: UInt32(modelNumber))
-      //}
-      DisplayManager.shared.addDisplay(display: screen)
+    for display in DDCManager().getDisplays() as! [DDCDisplay] {
+      DisplayManager.shared.addDisplay(display: ExternalDisplay(display))
+    }
+
+    for screen in NSScreen.screens {
+      if screen.isBuiltin {
+        DisplayManager.shared.addDisplay(display: InternalDisplay(screen))
       }
     }
 

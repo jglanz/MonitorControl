@@ -1,6 +1,6 @@
 import DDC
 
-//extension EDID {
+// extension EDID {
 //  public func displayName() -> String? {
 //    let descriptors = [self.descriptors.0, self.descriptors.1, self.descriptors.2, self.descriptors.3]
 //
@@ -30,4 +30,4 @@ import DDC
 //
 //    return String(self.serialNumber)
 //  }
-//}
+// }

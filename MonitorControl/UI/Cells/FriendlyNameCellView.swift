@@ -1,8 +1,8 @@
 import Cocoa
-import os.log
 import DDC
+import os.log
 class FriendlyNameCellView: NSTableCellView {
-  var display: DDCDisplay?
+  var display: Display?
 
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
@@ -11,10 +11,10 @@ class FriendlyNameCellView: NSTableCellView {
   @IBAction func valueChanged(_ sender: NSTextFieldCell) {
     if let display = display {
       let newValue = sender.stringValue
-      let originalValue = display.name
+      let originalValue = display.ddc?.name ?? display.name
 
       if newValue.isEmpty {
-        self.textField?.stringValue = originalValue!
+        self.textField?.stringValue = originalValue
         return
       }
 
