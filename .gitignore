@@ -2,3 +2,5 @@ Carthage
 
 *.xcuserdatad
 /.idea/markdown*
+/build/
+/DerivedData/
