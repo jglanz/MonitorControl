@@ -1,9 +1,10 @@
 import Cocoa
 import os.log
+import DDC
 
 class HideOsdCellView: NSTableCellView {
   @IBOutlet var button: NSButton!
-  var display: ExternalDisplay?
+  var display: DDCDisplay?
   let prefs = UserDefaults.standard
 
   override func draw(_ dirtyRect: NSRect) {
@@ -12,14 +13,14 @@ class HideOsdCellView: NSTableCellView {
 
   @IBAction func buttonToggled(_ sender: NSButton) {
     if let display = display {
-      switch sender.state {
-      case .on:
-        display.hideOsd = true
-      case .off:
-        display.hideOsd = false
-      default:
-        break
-      }
+//      switch sender.state {
+//      case .on:
+//        display.hideOsd = true
+//      case .off:
+//        display.hideOsd = false
+//      default:
+//        break
+//      }
     }
   }
 }

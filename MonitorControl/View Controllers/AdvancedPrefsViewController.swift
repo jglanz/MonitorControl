@@ -9,7 +9,7 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
   var toolbarItemImage: NSImage? = NSImage(named: NSImage.advancedName)
   let prefs = UserDefaults.standard
 
-  var displays: [ExternalDisplay] = []
+  var displays: [DDCDisplay] = []
 
   enum DisplayColumn: Int {
     case friendlyName
@@ -60,7 +60,7 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
   }
 
   @objc func loadDisplayList() {
-    self.displays = DisplayManager.shared.getDdcCapableDisplays()
+    self.displays = DDCManager().getDisplays() as! [DDCDisplay]// DisplayManager.shared.getDdcCapableDisplays()
     self.displayList.reloadData()
   }
 
@@ -75,35 +75,35 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
       return nil
     }
     let display = self.displays[row]
-    let pollingMode = display.getPollingMode()
+    //let pollingMode = display.getPollingMode()
 
     switch column {
     case .pollingMode:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? PollingModeCellView {
         cell.display = display
-        cell.pollingModeMenu.selectItem(withTag: pollingMode)
-        cell.didChangePollingMode = { _ in
-          // if the polling mode changed, reload the row so we can enable/disable the PollingCount field
-          tableView.reloadData(forRowIndexes: [row], columnIndexes: [DisplayColumn.pollingCount.rawValue])
-        }
+//        cell.pollingModeMenu.selectItem(withTag: pollingMode)
+//        cell.didChangePollingMode = { _ in
+//          // if the polling mode changed, reload the row so we can enable/disable the PollingCount field
+//          tableView.reloadData(forRowIndexes: [row], columnIndexes: [DisplayColumn.pollingCount.rawValue])
+//        }
         return cell
       }
     case .pollingCount:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? PollingCountCellView {
-        cell.textField?.stringValue = "\(display.getPollingCount())"
-        cell.display = display
-        cell.textField?.isEnabled = pollingMode == 4
+//        cell.textField?.stringValue = "\(display.getPollingCount())"
+//        cell.display = display
+//        cell.textField?.isEnabled = pollingMode == 4
         return cell
       }
     case .longerDelay:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? LongerDelayCellView {
-        cell.button.state = display.needsLongerDelay ? .on : .off
+        cell.button.state = .on// display.needsLongerDelay ? .on : .off
         cell.display = display
         return cell
       }
     case .hideOsd:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? HideOsdCellView {
-        cell.button.state = display.hideOsd ? .on : .off
+        cell.button.state = .on//display.hideOsd ? .on : .off
         cell.display = display
         return cell
       }
@@ -116,12 +116,12 @@ class AdvancedPrefsViewController: NSViewController, MASPreferencesViewControlle
     return nil
   }
 
-  private func getText(for column: DisplayColumn, with display: ExternalDisplay) -> String {
+  private func getText(for column: DisplayColumn, with display: DDCDisplay) -> String {
     switch column {
     case .friendlyName:
-      return display.getFriendlyName()
+      return display.name
     case .identifier:
-      return "\(display.identifier)"
+      return "\(display.index)"
     default:
       return ""
     }

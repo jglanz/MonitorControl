@@ -9,7 +9,7 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
   var toolbarItemImage: NSImage? = NSImage(named: NSImage.computerName)
   let prefs = UserDefaults.standard
 
-  var displays: [Display] = []
+  var displays: [DDCDisplay] = []
 
   enum DisplayColumn: Int {
     case checkbox
@@ -56,7 +56,7 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
   // MARK: - Table datasource
 
   @objc func loadDisplayList() {
-    self.displays = DisplayManager.shared.getAllDisplays()
+    self.displays = DDCManager().getDisplays() as! [DDCDisplay] //DisplayManager.shared.getAllDisplays()
     self.displayList.reloadData()
   }
 
@@ -78,20 +78,21 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
     case .checkbox:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? ButtonCellView {
         cell.display = display
-        cell.button.state = display.isEnabled ? .on : .off
+        cell.button.state = .on// display.isEnabled ? .on : .off
         return cell
       }
     case .ddc:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? ButtonCellView {
         cell.display = display
-        cell.button.state = DDC(for: display.identifier) != nil ? .on : .off
+        //cell.button.state = DDC(for: display.identifier) != nil ? .on : .off
+        cell.button.state = .on// display.isEnabled ? .on : .off
         cell.button.isEnabled = false
         return cell
       }
     case .friendlyName:
       if let cell = tableView.makeView(withIdentifier: tableColumn.identifier, owner: nil) as? FriendlyNameCellView {
         cell.display = display
-        cell.textField?.stringValue = display.getFriendlyName()
+        cell.textField?.stringValue = display.name
         cell.textField?.isEditable = true
         return cell
       }
@@ -105,16 +106,16 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
     return nil
   }
 
-  private func getText(for column: DisplayColumn, with display: Display) -> String {
+  private func getText(for column: DisplayColumn, with display: DDCDisplay) -> String {
     switch column {
     case .name:
       return display.name
     case .identifier:
-      return "\(display.identifier)"
+      return "\(display.index)"
     case .vendor:
-      return display.identifier.vendorNumber.map { String(format: "0x%02X", $0) } ?? NSLocalizedString("Unknown", comment: "Unknown vendor")
+      return "\(display.vendorId)"
     case .model:
-      return display.identifier.modelNumber.map { String(format: "0x%02X", $0) } ?? NSLocalizedString("Unknown", comment: "Unknown model")
+      return "\(display.productId)"
     default:
       return ""
     }

@@ -10,7 +10,7 @@ import DDC
 import Foundation
 
 class Display {
-  internal let identifier: CGDirectDisplayID
+  internal let identifier: DDCDisplay
   internal let name: String
   internal var vendorNumber: UInt32?
   internal var modelNumber: UInt32?
@@ -25,7 +25,7 @@ class Display {
 
   private let prefs = UserDefaults.standard
 
-  internal init(_ identifier: CGDirectDisplayID, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
+  internal init(_ identifier: DDCDisplay, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
     self.identifier = identifier
     self.name = name
     self.vendorNumber = vendorNumber
@@ -42,29 +42,29 @@ class Display {
     return self.prefs.string(forKey: "friendlyName-\(self.identifier)") ?? self.name
   }
 
-  func showOsd(command: DDC.Command, value: Int, maxValue: Int = 100) {
+  func showOsd(command: UInt8, value: Int, maxValue: Int = 100) {
     guard let manager = OSDManager.sharedManager() as? OSDManager else {
       return
     }
 
-    var osdImage: Int64!
-    switch command {
-    case .brightness:
-      osdImage = 1 // Brightness Image
-    case .audioSpeakerVolume:
-      osdImage = 3 // Speaker image
-    case .audioMuteScreenBlank:
-      osdImage = 4 // Mute image
-    default:
-      osdImage = 1
-    }
-
-    manager.showImage(osdImage,
-                      onDisplayID: self.identifier,
-                      priority: 0x1F4,
-                      msecUntilFade: 1000,
-                      filledChiclets: UInt32(value),
-                      totalChiclets: UInt32(maxValue),
-                      locked: false)
+//    var osdImage: Int64!
+//    switch command {
+//    case .brightness:
+//      osdImage = 1 // Brightness Image
+//    case .audioSpeakerVolume:
+//      osdImage = 3 // Speaker image
+//    case .audioMuteScreenBlank:
+//      osdImage = 4 // Mute image
+//    default:
+//      osdImage = 1
+//    }
+//
+//    manager.showImage(osdImage,
+//                      onDisplayID: self.identifier,
+//                      priority: 0x1F4,
+//                      msecUntilFade: 1000,
+//                      filledChiclets: UInt32(value),
+//                      totalChiclets: UInt32(maxValue),
+//                      locked: false)
   }
 }

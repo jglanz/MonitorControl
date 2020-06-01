@@ -83,18 +83,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func updateDisplays() {
     self.clearDisplays()
 
-    for screen in NSScreen.screens {
-      let name = screen.displayName ?? NSLocalizedString("Unknown", comment: "Unknown display name")
-      let id = screen.displayID
-      let vendorNumber = screen.vendorNumber
-      let modelNumber = screen.modelNumber
-      let display: Display
-      if screen.isBuiltin {
-        display = InternalDisplay(id, name: name, vendorNumber: vendorNumber, modelNumber: modelNumber)
-      } else {
-        display = ExternalDisplay(id, name: name, vendorNumber: vendorNumber, modelNumber: modelNumber)
+    for display in (DDCManager().getDisplays() as! [DDCDisplay?]) {
+      if display != nil {
+      let name = display!.name// screen.displayName ?? NSLocalizedString("Unknown", comment: "Unknown display name")
+      let id = display!.index
+      let vendorNumber = display!.vendorId
+        let modelNumber = display!.productId
+      let screen: Display
+//      if screen.isBuiltin {
+//        display = InternalDisplay(id, name: name, vendorNumber: vendorNumber, modelNumber: modelNumber)
+//      } else {
+        screen = ExternalDisplay(display!, name: name!, vendorNumber: UInt32(vendorNumber), modelNumber: UInt32(modelNumber))
+      //}
+      DisplayManager.shared.addDisplay(display: screen)
       }
-      DisplayManager.shared.addDisplay(display: display)
     }
 
     let ddcDisplays = DisplayManager.shared.getDdcCapableDisplays()
@@ -120,16 +122,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let volumeSliderHandler = Utils.addSliderMenuItem(toMenu: monitorSubMenu,
                                                       forDisplay: display,
-                                                      command: .audioSpeakerVolume,
+                                                      command: .AUDIO_SPEAKER_VOLUME,
                                                       title: NSLocalizedString("Volume", comment: "Shown in menu"))
     let brightnessSliderHandler = Utils.addSliderMenuItem(toMenu: monitorSubMenu,
                                                           forDisplay: display,
-                                                          command: .brightness,
+                                                          command: .BRIGHTNESS,
                                                           title: NSLocalizedString("Brightness", comment: "Shown in menu"))
     if prefs.bool(forKey: Utils.PrefKeys.showContrast.rawValue) {
       let contrastSliderHandler = Utils.addSliderMenuItem(toMenu: monitorSubMenu,
                                                           forDisplay: display,
-                                                          command: .contrast,
+                                                          command: .CONTRAST,
                                                           title: NSLocalizedString("Contrast", comment: "Shown in menu"))
       display.contrastSliderHandler = contrastSliderHandler
     }

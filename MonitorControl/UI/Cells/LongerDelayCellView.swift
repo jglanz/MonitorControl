@@ -1,9 +1,10 @@
 import Cocoa
 import os.log
+import DDC
 
 class LongerDelayCellView: NSTableCellView {
   @IBOutlet var button: NSButton!
-  var display: ExternalDisplay?
+  var display: DDCDisplay?
   let prefs = UserDefaults.standard
 
   override func draw(_ dirtyRect: NSRect) {
@@ -25,14 +26,14 @@ class LongerDelayCellView: NSTableCellView {
           alert.beginSheetModal(for: window, completionHandler: { modalResponse in
             if modalResponse == NSApplication.ModalResponse.alertFirstButtonReturn {
               Utils.setStartAtLogin(enabled: false)
-              display.needsLongerDelay = true
+              //display.needsLongerDelay = true
             } else {
               sender.state = .off
             }
           })
         }
-      case .off:
-        display.needsLongerDelay = false
+//      case .off:
+//        display.needsLongerDelay = false
       default:
         break
       }
