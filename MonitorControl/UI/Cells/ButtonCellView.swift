@@ -1,9 +1,10 @@
 import Cocoa
 import os.log
+import DDC
 
 class ButtonCellView: NSTableCellView {
   @IBOutlet var button: NSButton!
-  var display: Display?
+  var display: DDCDisplay?
 
   override func draw(_ dirtyRect: NSRect) {
     super.draw(dirtyRect)
@@ -12,7 +13,7 @@ class ButtonCellView: NSTableCellView {
   @IBAction func buttonToggled(_ sender: NSButton) {
     if let display = display {
       let isEnabled = sender.state == .on
-      display.isEnabled = isEnabled
+//      display.isEnabled = isEnabled
       #if DEBUG
         os_log("Toggle enabled display state: %{public}@", type: .info, isEnabled ? "on" : "off")
       #endif

@@ -1,6 +1,6 @@
 import Cocoa
 import os.log
-
+import DDC
 /*
  menu tags:
  0: none
@@ -11,7 +11,7 @@ import os.log
  We use these tags as a way to mark selection
  */
 class PollingModeCellView: NSTableCellView {
-  var display: ExternalDisplay?
+  var display: DDCDisplay?
   @IBOutlet var pollingModeMenu: NSPopUpButtonCell!
 
   var didChangePollingMode: ((_ pollingModeInt: Int) -> Void)?
@@ -19,13 +19,13 @@ class PollingModeCellView: NSTableCellView {
   @IBAction func valueChanged(_ sender: NSPopUpButton) {
     if let display = display {
       let newValue = sender.selectedTag()
-      let originalValue = display.getPollingMode()
-
-      if newValue != originalValue {
-        display.setPollingMode(newValue)
-        self.didChangePollingMode?(newValue)
-        os_log("Value changed for polling count: %{public}@", type: .info, "from `\(originalValue)` to `\(newValue)`")
-      }
+//      let originalValue = display.getPollingMode()
+//
+//      if newValue != originalValue {
+//        display.setPollingMode(newValue)
+//        self.didChangePollingMode?(newValue)
+//        os_log("Value changed for polling count: %{public}@", type: .info, "from `\(originalValue)` to `\(newValue)`")
+//      }
     }
   }
 }

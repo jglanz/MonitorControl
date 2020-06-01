@@ -4,9 +4,9 @@ import DDC
 class SliderHandler {
   var slider: NSSlider?
   var display: ExternalDisplay
-  let cmd: DDC.Command
+  let cmd: DDCCommand
 
-  public init(display: ExternalDisplay, command: DDC.Command) {
+  public init(display: ExternalDisplay, command: DDCCommand) {
     self.display = display
     self.cmd = command
   }
@@ -24,21 +24,24 @@ class SliderHandler {
     }
 
     // For the speaker volume slider, also set/unset the mute command when the value is changed from/to 0
-    if self.cmd == .audioSpeakerVolume, (self.display.isMuted() && value > 0) || (!self.display.isMuted() && value == 0) {
+    if self.cmd == .AUDIO_SPEAKER_VOLUME, (self.display.isMuted() && value > 0) || (!self.display.isMuted() && value == 0) {
       self.display.toggleMute(fromVolumeSlider: true)
     }
 
     // If the command is to adjust brightness, also instruct the display to set the contrast value, if necessary
-    if self.cmd == .brightness {
+    if self.cmd == .BRIGHTNESS {
       self.display.setContrastValueForBrightness(value)
     }
 
     // If the command is to adjust contrast, erase the previous value for the contrast to restore after brightness is increased
-    if self.cmd == .contrast {
-      self.display.setRestoreValue(nil, for: .contrast)
+    if self.cmd == .CONTRAST {
+      self.display.setRestoreValue(nil, for: .CONTRAST)
     }
 
-    _ = self.display.ddc?.write(command: self.cmd, value: UInt16(value))
+    let ddcCmd = DDCWriteCommand()
+    ddcCmd.controlId = Int(self.cmd.rawValue)
+    ddcCmd.newValue = value
+    _ = DDCManager().write(ddcCmd, for: self.display.identifier)// self.display.ddc?.write(command: self.cmd, value: UInt16(value))
     self.display.saveValue(value, for: self.cmd)
   }
 }

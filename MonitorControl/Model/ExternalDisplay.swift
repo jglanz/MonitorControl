@@ -4,10 +4,13 @@ import DDC
 import os.log
 
 class ExternalDisplay: Display {
+  static let ddc = DDCManager()
+  
   var brightnessSliderHandler: SliderHandler?
   var volumeSliderHandler: SliderHandler?
   var contrastSliderHandler: SliderHandler?
-  var ddc: DDC?
+//  var ddc: DDC?
+//  var ddcDisplay: DDCDisplay
 
   private let prefs = UserDefaults.standard
 
@@ -34,9 +37,10 @@ class ExternalDisplay: Display {
   private var audioPlayer: AVAudioPlayer?
   private let osdChicletBoxes: Float = 16
 
-  override init(_ identifier: CGDirectDisplayID, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
+  override init(_ identifier: DDCDisplay, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
     super.init(identifier, name: name, vendorNumber: vendorNumber, modelNumber: modelNumber)
-    self.ddc = DDC(for: identifier)
+//    self.ddcDisplay = identifier
+    //self.ddc = DDC(for: identifier)
   }
 
   // On some displays, the display's OSD overlaps the macOS OSD,
@@ -46,110 +50,110 @@ class ExternalDisplay: Display {
       return
     }
 
-    for _ in 0..<20 {
-      _ = self.ddc?.write(command: .osd, value: UInt16(1), errorRecoveryWaitTime: 2000)
-    }
+//    for _ in 0..<20 {
+//      _ = self.ddc?.write(command: .osd, value: UInt16(1), errorRecoveryWaitTime: 2000)
+//    }
   }
 
   func isMuted() -> Bool {
-    return self.getValue(for: .audioMuteScreenBlank) == 1
+    return self.getValue(for: .AUDIO_MUTE) == 1
   }
 
   func toggleMute(fromVolumeSlider: Bool = false) {
     var muteValue: Int
     var volumeOSDValue: Int
 
-    if !self.isMuted() {
-      muteValue = 1
-      volumeOSDValue = 0
-    } else {
-      muteValue = 2
-      volumeOSDValue = self.getValue(for: .audioSpeakerVolume)
+//    if !self.isMuted() {
+//      muteValue = 1
+//      volumeOSDValue = 0
+//    } else {
+//      muteValue = 2
+//      volumeOSDValue = self.getValue(for: .audioSpeakerVolume)
+//
+//      // The volume that will be set immediately after setting unmute while the old set volume was 0 is unpredictable
+//      // Hence, just set it to a single filled chiclet
+//      if volumeOSDValue == 0 {
+//        volumeOSDValue = self.stepSize(for: .audioSpeakerVolume, isSmallIncrement: false)
+//        self.saveValue(volumeOSDValue, for: .audioSpeakerVolume)
+//      }
+//    }
+//
+//    let volumeDDCValue = UInt16(volumeOSDValue)
+//
+//    guard self.ddc?.write(command: .audioSpeakerVolume, value: volumeDDCValue) == true else {
+//      return
+//    }
 
-      // The volume that will be set immediately after setting unmute while the old set volume was 0 is unpredictable
-      // Hence, just set it to a single filled chiclet
-      if volumeOSDValue == 0 {
-        volumeOSDValue = self.stepSize(for: .audioSpeakerVolume, isSmallIncrement: false)
-        self.saveValue(volumeOSDValue, for: .audioSpeakerVolume)
-      }
-    }
+//    if self.supportsMuteCommand() {
+//      guard self.ddc?.write(command: .audioMuteScreenBlank, value: UInt16(muteValue)) == true else {
+//        return
+//      }
+//    }
 
-    let volumeDDCValue = UInt16(volumeOSDValue)
-
-    guard self.ddc?.write(command: .audioSpeakerVolume, value: volumeDDCValue) == true else {
-      return
-    }
-
-    if self.supportsMuteCommand() {
-      guard self.ddc?.write(command: .audioMuteScreenBlank, value: UInt16(muteValue)) == true else {
-        return
-      }
-    }
-
-    self.saveValue(muteValue, for: .audioMuteScreenBlank)
-
-    if !fromVolumeSlider {
-      self.hideDisplayOsd()
-      self.showOsd(command: volumeOSDValue > 0 ? .audioSpeakerVolume : .audioMuteScreenBlank, value: volumeOSDValue)
-
-      if volumeOSDValue > 0 {
-        self.playVolumeChangedSound()
-      }
-
-      if let slider = self.volumeSliderHandler?.slider {
-        slider.intValue = Int32(volumeDDCValue)
-      }
-    }
+//    self.saveValue(muteValue, for: .AUDIO_MUTE)
+//
+//    if !fromVolumeSlider {
+//      self.hideDisplayOsd()
+//      //self.showOsd(command: volumeOSDValue > 0 ? .audioSpeakerVolume : .audioMuteScreenBlank, value: volumeOSDValue)
+//
+//      if volumeOSDValue > 0 {
+//        self.playVolumeChangedSound()
+//      }
+//
+////      if let slider = self.volumeSliderHandler?.slider {
+////        slider.intValue = Int32(volumeDDCValue)
+////      }
+//    }
   }
 
   func stepVolume(isUp: Bool, isSmallIncrement: Bool) {
     var muteValue: Int?
-    let volumeOSDValue = self.calcNewValue(for: .audioSpeakerVolume, isUp: isUp, isSmallIncrement: isSmallIncrement)
+    let volumeOSDValue = self.calcNewValue(for: .AUDIO_SPEAKER_VOLUME, isUp: isUp, isSmallIncrement: isSmallIncrement)
     let volumeDDCValue = UInt16(volumeOSDValue)
+//
+//    if self.isMuted(), volumeOSDValue > 0 {
+//      muteValue = 2
+//    } else if !self.isMuted(), volumeOSDValue == 0 {
+//      muteValue = 1
+//    }
+//
+//    let isAlreadySet = volumeOSDValue == self.getValue(for: .audioSpeakerVolume)
+//
+//    if !isAlreadySet {
+//      guard self.ddc?.write(command: .audioSpeakerVolume, value: volumeDDCValue) == true else {
+//        return
+//      }
+//    }
 
-    if self.isMuted(), volumeOSDValue > 0 {
-      muteValue = 2
-    } else if !self.isMuted(), volumeOSDValue == 0 {
-      muteValue = 1
-    }
-
-    let isAlreadySet = volumeOSDValue == self.getValue(for: .audioSpeakerVolume)
-
-    if !isAlreadySet {
-      guard self.ddc?.write(command: .audioSpeakerVolume, value: volumeDDCValue) == true else {
-        return
-      }
-    }
-
-    if let muteValue = muteValue {
-      // If the mute command is supported, set its value accordingly
-      if self.supportsMuteCommand() {
-        guard self.ddc?.write(command: .audioMuteScreenBlank, value: UInt16(muteValue)) == true else {
-          return
-        }
-      }
-      self.saveValue(muteValue, for: .audioMuteScreenBlank)
-    }
-
-    self.hideDisplayOsd()
-    self.showOsd(command: .audioSpeakerVolume, value: volumeOSDValue)
-
-    if !isAlreadySet {
-      self.saveValue(volumeOSDValue, for: .audioSpeakerVolume)
-
-      if volumeOSDValue > 0 {
-        self.playVolumeChangedSound()
-      }
-
-      if let slider = self.volumeSliderHandler?.slider {
-        slider.intValue = Int32(volumeDDCValue)
-      }
-    }
+//    if let muteValue = muteValue {
+//      // If the mute command is supported, set its value accordingly
+//      if self.supportsMuteCommand() {
+//        guard DDCManager().write(command: .AUD, value: UInt16(muteValue)) == true else {
+//          return
+//        }
+//      }
+//      self.saveValue(muteValue, for: .audioMuteScreenBlank)
+//    }
+//
+//    self.hideDisplayOsd()
+//    self.showOsd(command: .audioSpeakerVolume, value: volumeOSDValue)
+//
+//    if !isAlreadySet {
+//      self.saveValue(volumeOSDValue, for: .audioSpeakerVolume)
+//
+//      if volumeOSDValue > 0 {
+//        self.playVolumeChangedSound()
+//      }
+//
+//      if let slider = self.volumeSliderHandler?.slider {
+//        slider.intValue = Int32(volumeDDCValue)
+//      }
+//    }
   }
 
   override func stepBrightness(isUp: Bool, isSmallIncrement: Bool) {
-    let osdValue = Int(self.calcNewValue(for: .brightness, isUp: isUp, isSmallIncrement: isSmallIncrement))
-    let isAlreadySet = osdValue == self.getValue(for: .brightness)
+    let osdValue = Int(self.calcNewValue(for: .BRIGHTNESS, isUp: isUp, isSmallIncrement: isSmallIncrement))
+    let isAlreadySet = osdValue == self.getValue(for: .BRIGHTNESS)
     let ddcValue = UInt16(osdValue)
 
     // Set the contrast value according to the brightness, if necessary
@@ -158,74 +162,75 @@ class ExternalDisplay: Display {
     }
 
     if !isAlreadySet {
-      guard self.ddc?.write(command: .brightness, value: ddcValue) == true else {
-        return
-      }
+      let cmd = DDCWriteCommand(command: DDCCommand.BRIGHTNESS.rawValue, andValue: CUnsignedInt(ddcValue))// (DDCCommand)
+//      guard DDCManager().write(cmd, for: self.identifier) == true else {
+//        return
+//      }
     }
 
-    self.showOsd(command: .brightness, value: osdValue)
+    self.showOsd(command: DDCCommand.BRIGHTNESS.rawValue, value: osdValue)
 
     if !isAlreadySet {
       if let slider = self.brightnessSliderHandler?.slider {
         slider.intValue = Int32(ddcValue)
       }
 
-      self.saveValue(osdValue, for: .brightness)
+      self.saveValue(osdValue, for: .BRIGHTNESS)
     }
   }
 
   func setContrastValueForBrightness(_ brightness: Int) {
     var contrastValue: Int?
 
-    if brightness == 0 {
-      contrastValue = 0
-
-      // Save the current DDC value for contrast so it can be restored, even across app restarts
-      if self.getRestoreValue(for: .contrast) == 0 {
-        self.setRestoreValue(self.getValue(for: .contrast), for: .contrast)
-      }
-    } else if self.getValue(for: .brightness) == 0, brightness > 0 {
-      contrastValue = self.getRestoreValue(for: .contrast)
-    }
-
-    // Only write the new contrast value if lowering contrast after brightness is enabled
-    if let contrastValue = contrastValue, self.prefs.bool(forKey: Utils.PrefKeys.lowerContrast.rawValue) {
-      _ = self.ddc?.write(command: .contrast, value: UInt16(contrastValue))
-      self.saveValue(contrastValue, for: .contrast)
-
-      if let slider = contrastSliderHandler?.slider {
-        slider.intValue = Int32(contrastValue)
-      }
-    }
+//    if brightness == 0 {
+//      contrastValue = 0
+//
+//      // Save the current DDC value for contrast so it can be restored, even across app restarts
+//      if self.getRestoreValue(for: .CONTRAST) == 0 {
+//        self.setRestoreValue(self.getValue(for: .contrast), for: .contrast)
+//      }
+//    } else if self.getValue(for: .brightness) == 0, brightness > 0 {
+//      contrastValue = self.getRestoreValue(for: .contrast)
+//    }
+//
+//    // Only write the new contrast value if lowering contrast after brightness is enabled
+//    if let contrastValue = contrastValue, self.prefs.bool(forKey: Utils.PrefKeys.lowerContrast.rawValue) {
+//      _ = DDCManager().write(command: .contrast, value: UInt16(contrastValue))
+//      self.saveValue(contrastValue, for: .contrast)
+//
+//      if let slider = contrastSliderHandler?.slider {
+//        slider.intValue = Int32(contrastValue)
+//      }
+//    }
   }
 
-  func readDDCValues(for command: DDC.Command, tries: UInt, minReplyDelay delay: UInt64?) -> (current: UInt16, max: UInt16)? {
+  func readDDCValues(for command: DDCCommand, tries: UInt, minReplyDelay delay: UInt64?) -> (current: UInt16, max: UInt16)? {
     var values: (UInt16, UInt16)?
 
-    if self.ddc?.supported(minReplyDelay: delay) == true {
-      os_log("Display supports DDC.", type: .debug)
-    } else {
-      os_log("Display does not support DDC.", type: .debug)
-    }
-
-    if self.ddc?.enableAppReport() == true {
-      os_log("Display supports enabling DDC application report.", type: .debug)
-    } else {
-      os_log("Display does not support enabling DDC application report.", type: .debug)
-    }
-
-    values = self.ddc?.read(command: command, tries: tries, minReplyDelay: delay)
+//    if self.ddc?.supported(minReplyDelay: delay) == true {
+//      os_log("Display supports DDC.", type: .debug)
+//    } else {
+//      os_log("Display does not support DDC.", type: .debug)
+//    }
+//
+//    if self.ddc?.enableAppReport() == true {
+//      os_log("Display supports enabling DDC application report.", type: .debug)
+//    } else {
+//      os_log("Display does not support enabling DDC application report.", type: .debug)
+//    }
+//
+//    values = self.ddc?.read(command: command, tries: tries, minReplyDelay: delay)
     return values
   }
 
-  func calcNewValue(for command: DDC.Command, isUp: Bool, isSmallIncrement: Bool) -> Int {
+  func calcNewValue(for command: DDCCommand, isUp: Bool, isSmallIncrement: Bool) -> Int {
     let currentValue = self.getValue(for: command)
     let nextValue: Int
 
     if isSmallIncrement {
       nextValue = currentValue + (isUp ? 1 : -1)
     } else {
-      let filledChicletBoxes = self.osdChicletBoxes * (Float(currentValue) / Float(self.getMaxValue(for: command)))
+      let filledChicletBoxes = self.osdChicletBoxes * (Float(currentValue) / Float(self.getMaxValue(for: command.rawValue)))
 
       var nextFilledChicletBoxes: Float
       var filledChicletBoxesRel: Float = isUp ? 1 : -1
@@ -237,34 +242,34 @@ class ExternalDisplay: Display {
       }
 
       nextFilledChicletBoxes = isUp ? ceil(filledChicletBoxes + filledChicletBoxesRel) : floor(filledChicletBoxes + filledChicletBoxesRel)
-      nextValue = Int(Float(self.getMaxValue(for: command)) * (nextFilledChicletBoxes / self.osdChicletBoxes))
+      nextValue = Int(Float(self.getMaxValue(for: command.rawValue)) * (nextFilledChicletBoxes / self.osdChicletBoxes))
     }
-    return max(0, min(self.getMaxValue(for: command), Int(nextValue)))
+    return max(0, min(self.getMaxValue(for: command.rawValue), Int(nextValue)))
   }
 
-  func getValue(for command: DDC.Command) -> Int {
-    return self.prefs.integer(forKey: "\(command.rawValue)-\(self.identifier)")
+  func getValue(for command: DDCCommand) -> Int {
+    return self.prefs.integer(forKey: "\(command)-\(self.identifier)")
   }
 
-  func saveValue(_ value: Int, for command: DDC.Command) {
-    self.prefs.set(value, forKey: "\(command.rawValue)-\(self.identifier)")
+  func saveValue(_ value: Int, for command: DDCCommand) {
+    self.prefs.set(value, forKey: "\(command)-\(self.identifier)")
   }
 
-  func saveMaxValue(_ maxValue: Int, for command: DDC.Command) {
-    self.prefs.set(maxValue, forKey: "max-\(command.rawValue)-\(self.identifier)")
+  func saveMaxValue(_ maxValue: Int, for command: DDCCommand) {
+    self.prefs.set(maxValue, forKey: "max-\(command)-\(self.identifier)")
   }
 
-  func getMaxValue(for command: DDC.Command) -> Int {
-    let max = self.prefs.integer(forKey: "max-\(command.rawValue)-\(self.identifier)")
+  func getMaxValue(for command: UInt8) -> Int {
+    let max = self.prefs.integer(forKey: "max-\(command)-\(self.identifier)")
     return max == 0 ? 100 : max
   }
 
-  func getRestoreValue(for command: DDC.Command) -> Int {
-    return self.prefs.integer(forKey: "restore-\(command.rawValue)-\(self.identifier)")
+  func getRestoreValue(for command: DDCCommand) -> Int {
+    return self.prefs.integer(forKey: "restore-\(command)-\(self.identifier)")
   }
 
-  func setRestoreValue(_ value: Int?, for command: DDC.Command) {
-    self.prefs.set(value, forKey: "restore-\(command.rawValue)-\(self.identifier)")
+  func setRestoreValue(_ value: Int?, for command: DDCCommand) {
+    self.prefs.set(value, forKey: "restore-\(command)-\(self.identifier)")
   }
 
   func setPollingMode(_ value: Int) {
@@ -307,17 +312,17 @@ class ExternalDisplay: Display {
     self.prefs.set(value, forKey: "pollingCount-\(self.identifier)")
   }
 
-  private func stepSize(for command: DDC.Command, isSmallIncrement: Bool) -> Int {
-    return isSmallIncrement ? 1 : Int(floor(Float(self.getMaxValue(for: command)) / self.osdChicletBoxes))
+  private func stepSize(for command: DDCCommand, isSmallIncrement: Bool) -> Int {
+    return isSmallIncrement ? 1 : Int(floor(Float(self.getMaxValue(for: command.rawValue)) / self.osdChicletBoxes))
   }
 
-  override func showOsd(command: DDC.Command, value: Int, maxValue _: Int = 100) {
+  override func showOsd(command: UInt8, value: Int, maxValue _: Int = 100) {
     super.showOsd(command: command, value: value, maxValue: self.getMaxValue(for: command))
   }
 
   private func supportsMuteCommand() -> Bool {
     // Monitors which don't support the mute command - e.g. Dell U3419W - will have a maximum value of 100 for the DDC mute command
-    return self.getMaxValue(for: .audioMuteScreenBlank) == 2
+    return self.getMaxValue(for: DDCCommand.AUDIO_MUTE.rawValue) == 2
   }
 
   private func playVolumeChangedSound() {

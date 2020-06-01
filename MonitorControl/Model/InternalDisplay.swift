@@ -10,12 +10,13 @@
 //  all credit goes to @fnesveda
 
 import Foundation
+import DDC
 
 class InternalDisplay: Display {
   // the queue for dispatching display operations, so they're not performed directly and concurrently
   private var displayQueue: DispatchQueue
 
-  override init(_ identifier: CGDirectDisplayID, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
+  override init(_ identifier: DDCDisplay, name: String, vendorNumber: UInt32?, modelNumber: UInt32?) {
     self.displayQueue = DispatchQueue(label: String("displayQueue-\(identifier)"))
     super.init(identifier, name: name, vendorNumber: vendorNumber, modelNumber: modelNumber)
   }
@@ -40,17 +41,17 @@ class InternalDisplay: Display {
     self.displayQueue.sync {
       type(of: self).CoreDisplaySetUserBrightness?(self.identifier, Double(value))
       type(of: self).DisplayServicesBrightnessChanged?(self.identifier, Double(value))
-      self.showOsd(command: .brightness, value: Int(value * 64), maxValue: 64)
+      self.showOsd(command: DDCCommand.BRIGHTNESS.rawValue, value: Int(value * 64), maxValue: 64)
     }
   }
 
   // notifies the system that the brightness of a specified display has changed (to update System Preferences etc.)
   // unfortunately Apple doesn't provide a public API for this, so we have to manually extract the function from the DisplayServices framework
-  private static var DisplayServicesBrightnessChanged: ((CGDirectDisplayID, Double) -> Void)? {
+  private static var DisplayServicesBrightnessChanged: ((DDCDisplay, Double) -> Void)? {
     let displayServicesPath = CFURLCreateWithString(kCFAllocatorDefault, "/System/Library/PrivateFrameworks/DisplayServices.framework" as CFString, nil)
     if let displayServicesBundle = CFBundleCreate(kCFAllocatorDefault, displayServicesPath) {
       if let funcPointer = CFBundleGetFunctionPointerForName(displayServicesBundle, "DisplayServicesBrightnessChanged" as CFString) {
-        typealias DSBCFunctionType = @convention(c) (UInt32, Double) -> Void
+        typealias DSBCFunctionType = @convention(c) (DDCDisplay, Double) -> Void
         return unsafeBitCast(funcPointer, to: DSBCFunctionType.self)
       }
     }
@@ -59,11 +60,11 @@ class InternalDisplay: Display {
 
   // reads the brightness of a display through the CoreDisplay framework
   // unfortunately Apple doesn't provide a public API for this, so we have to manually extract the function from the CoreDisplay framework
-  private static var CoreDisplayGetUserBrightness: ((CGDirectDisplayID) -> Double)? {
+  private static var CoreDisplayGetUserBrightness: ((DDCDisplay) -> Double)? {
     let coreDisplayPath = CFURLCreateWithString(kCFAllocatorDefault, "/System/Library/Frameworks/CoreDisplay.framework" as CFString, nil)
     if let coreDisplayBundle = CFBundleCreate(kCFAllocatorDefault, coreDisplayPath) {
       if let funcPointer = CFBundleGetFunctionPointerForName(coreDisplayBundle, "CoreDisplay_Display_GetUserBrightness" as CFString) {
-        typealias CDGUBFunctionType = @convention(c) (UInt32) -> Double
+        typealias CDGUBFunctionType = @convention(c) (DDCDisplay) -> Double
         return unsafeBitCast(funcPointer, to: CDGUBFunctionType.self)
       }
     }
@@ -72,11 +73,11 @@ class InternalDisplay: Display {
 
   // sets the brightness of a display through the CoreDisplay framework
   // unfortunately Apple doesn't provide a public API for this, so we have to manually extract the function from the CoreDisplay framework
-  private static var CoreDisplaySetUserBrightness: ((CGDirectDisplayID, Double) -> Void)? {
+  private static var CoreDisplaySetUserBrightness: ((DDCDisplay, Double) -> Void)? {
     let coreDisplayPath = CFURLCreateWithString(kCFAllocatorDefault, "/System/Library/Frameworks/CoreDisplay.framework" as CFString, nil)
     if let coreDisplayBundle = CFBundleCreate(kCFAllocatorDefault, coreDisplayPath) {
       if let funcPointer = CFBundleGetFunctionPointerForName(coreDisplayBundle, "CoreDisplay_Display_SetUserBrightness" as CFString) {
-        typealias CDSUBFunctionType = @convention(c) (UInt32, Double) -> Void
+        typealias CDSUBFunctionType = @convention(c) (DDCDisplay, Double) -> Void
         return unsafeBitCast(funcPointer, to: CDSUBFunctionType.self)
       }
     }
