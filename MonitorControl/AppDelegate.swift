@@ -1,6 +1,6 @@
 import AMCoreAudio
 import Cocoa
-import DDC
+import ddc
 import Foundation
 import MASPreferences
 import MediaKeyTap

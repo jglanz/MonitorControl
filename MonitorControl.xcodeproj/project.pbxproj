@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07DBAD412485574A00CB750E /* DDC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AEBB1D24847E9400909494 /* DDC.framework */; };
-		07DBAD422485574A00CB750E /* DDC.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 07AEBB1D24847E9400909494 /* DDC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		076DA6E82486B829006BB4C4 /* ddc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AEBB1D24847E9400909494 /* ddc.framework */; };
+		07DBAD422485574A00CB750E /* ddc.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 07AEBB1D24847E9400909494 /* ddc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2894D9B82280B30500DF58DA /* CGDirectDisplayID+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2894D9B72280B30500DF58DA /* CGDirectDisplayID+Extension.swift */; };
 		28D1DDD8227FB7A4004CB494 /* OSD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0A987D61F77B290009B603D /* OSD.framework */; };
 		28D1DDE5227FB7D0004CB494 /* MediaKeyTap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE2227FB7D0004CB494 /* MediaKeyTap.framework */; };
@@ -74,6 +74,13 @@
 			remoteGlobalIDString = 07F5AEE1248465C100556DB9;
 			remoteInfo = DDC;
 		};
+		07D13E1E2486B80A004FA5CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07AEBB1824847E9400909494 /* DDC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 077CC5AC2486A2F400076AEA;
+			remoteInfo = ddcctl;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,7 +90,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				07DBAD422485574A00CB750E /* DDC.framework in [Carthage] Embed Frameworks */,
+				07DBAD422485574A00CB750E /* ddc.framework in [Carthage] Embed Frameworks */,
 				28D1DDE8227FB7D0004CB494 /* AMCoreAudio.framework in [Carthage] Embed Frameworks */,
 				28D1DDEA227FB7D0004CB494 /* MASPreferences.framework in [Carthage] Embed Frameworks */,
 				28D1DDE6227FB7D0004CB494 /* MediaKeyTap.framework in [Carthage] Embed Frameworks */,
@@ -189,11 +196,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				076DA6E82486B829006BB4C4 /* ddc.framework in Frameworks */,
 				28D1DDE7227FB7D0004CB494 /* AMCoreAudio.framework in Frameworks */,
 				28D1DDE9227FB7D0004CB494 /* MASPreferences.framework in Frameworks */,
 				28D1DDE5227FB7D0004CB494 /* MediaKeyTap.framework in Frameworks */,
 				28D1DDD8227FB7A4004CB494 /* OSD.framework in Frameworks */,
-				07DBAD412485574A00CB750E /* DDC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +217,8 @@
 		07AEBB1924847E9400909494 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				07AEBB1D24847E9400909494 /* DDC.framework */,
+				07AEBB1D24847E9400909494 /* ddc.framework */,
+				07D13E1F2486B80A004FA5CE /* ddcctl */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -457,11 +465,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		07AEBB1D24847E9400909494 /* DDC.framework */ = {
+		07AEBB1D24847E9400909494 /* ddc.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = DDC.framework;
+			path = ddc.framework;
 			remoteRef = 07AEBB1C24847E9400909494 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07D13E1F2486B80A004FA5CE /* ddcctl */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ddcctl;
+			remoteRef = 07D13E1E2486B80A004FA5CE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

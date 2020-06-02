@@ -6,7 +6,7 @@
 //  Copyright © 2020 Guillaume Broder. All rights reserved.
 //
 
-import DDC
+import ddc
 import Foundation
 
 class Display {
@@ -53,7 +53,7 @@ class Display {
     return self.prefs.string(forKey: "friendlyName-\(self.identifier)") ?? self.name
   }
 
-  func showOsd(command _: DDCCommand, value _: Int, maxValue _: Int = 100) {
+  func showOsd(command _: DDCControl, value _: Int, maxValue _: Int = 100) {
 //    guard let manager = OSDManager.sharedManager() as? OSDManager else {
 //      return
 //    }

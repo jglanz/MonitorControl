@@ -10,7 +10,7 @@
 //  all credit goes to @fnesveda
 
 import Cocoa
-import DDC
+import ddc
 import Foundation
 
 class InternalDisplay: Display {
@@ -50,7 +50,7 @@ class InternalDisplay: Display {
     self.displayQueue.sync {
       type(of: self).CoreDisplaySetUserBrightness?(Double(value))
       type(of: self).DisplayServicesBrightnessChanged?(Double(value))
-      self.showOsd(command: DDCCommand.BRIGHTNESS, value: Int(value * 64), maxValue: 64)
+      self.showOsd(command: DDCControl.BRIGHTNESS, value: Int(value * 64), maxValue: 64)
     }
   }
 

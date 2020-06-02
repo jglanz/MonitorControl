@@ -1,13 +1,13 @@
 import Cocoa
-import DDC
+import ddc
 import os.log
 
 class SliderHandler {
   var slider: NSSlider?
   var display: ExternalDisplay
-  let cmd: DDCCommand
+  let cmd: DDCControl
 
-  public init(display: ExternalDisplay, command: DDCCommand) {
+  public init(display: ExternalDisplay, command: DDCControl) {
     self.display = display
     self.cmd = command
   }

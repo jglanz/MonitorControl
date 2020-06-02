@@ -1,6 +1,6 @@
 import AVFoundation
 import Cocoa
-import DDC
+import ddc
 import os.log
 
 class ExternalDisplay: Display {
@@ -162,13 +162,13 @@ class ExternalDisplay: Display {
     }
 
     if !isAlreadySet {
-      let cmd = DDCWriteCommand(controlId: DDCCommand.BRIGHTNESS.rawValue, andValue: CUnsignedInt(ddcValue)) // (DDCCommand)
+      let cmd = DDCWriteCommand(controlId: DDCControl.BRIGHTNESS.rawValue, andValue: CUnsignedInt(ddcValue)) // (DDCControl)
       guard self.ddc?.write(cmd) == true else {
         return
       }
     }
 
-    self.showOsd(command: DDCCommand.BRIGHTNESS, value: osdValue)
+    self.showOsd(command: DDCControl.BRIGHTNESS, value: osdValue)
 
     if !isAlreadySet {
       if let slider = self.brightnessSliderHandler?.slider {
@@ -195,7 +195,7 @@ class ExternalDisplay: Display {
 
     // Only write the new contrast value if lowering contrast after brightness is enabled
     if let contrastValue = contrastValue, self.prefs.bool(forKey: Utils.PrefKeys.lowerContrast.rawValue) {
-      let cmd = DDCWriteCommand(controlId: DDCCommand.CONTRAST.rawValue, andValue: UInt32(contrastValue))
+      let cmd = DDCWriteCommand(controlId: DDCControl.CONTRAST.rawValue, andValue: UInt32(contrastValue))
       _ = self.ddc!.write(cmd)
       self.saveValue(contrastValue, for: .CONTRAST)
 
@@ -205,7 +205,7 @@ class ExternalDisplay: Display {
     }
   }
 
-  func readDDCValues(for command: DDCCommand, tries _: UInt, minReplyDelay _: UInt64?) -> (current: UInt16, max: UInt16)? {
+  func readDDCValues(for command: DDCControl, tries _: UInt, minReplyDelay _: UInt64?) -> (current: UInt16, max: UInt16)? {
     var values: (UInt16, UInt16)?
     if let ddc = self.ddc {
 //    if ddc.supported(minReplyDelay: delay) == true {
@@ -228,7 +228,7 @@ class ExternalDisplay: Display {
     return values
   }
 
-  func calcNewValue(for command: DDCCommand, isUp: Bool, isSmallIncrement: Bool) -> Int {
+  func calcNewValue(for command: DDCControl, isUp: Bool, isSmallIncrement: Bool) -> Int {
     let currentValue = self.getValue(for: command)
     let nextValue: Int
 
@@ -252,19 +252,19 @@ class ExternalDisplay: Display {
     return max(0, min(self.getMaxValue(for: command), Int(nextValue)))
   }
 
-  func getValue(for command: DDCCommand) -> Int {
+  func getValue(for command: DDCControl) -> Int {
     return self.prefs.integer(forKey: "\(command.rawValue)-\(self.identifier)")
   }
 
-  func saveValue(_ value: Int, for command: DDCCommand) {
+  func saveValue(_ value: Int, for command: DDCControl) {
     self.prefs.set(value, forKey: "\(command.rawValue)-\(self.identifier)")
   }
 
-  func saveMaxValue(_ maxValue: Int, for command: DDCCommand) {
+  func saveMaxValue(_ maxValue: Int, for command: DDCControl) {
     self.prefs.set(maxValue, forKey: "max-\(command.rawValue)-\(self.identifier)")
   }
 
-  func getMaxValue(for command: DDCCommand) -> Int {
+  func getMaxValue(for command: DDCControl) -> Int {
     return self.getMaxValue(for: command.rawValue)
   }
 
@@ -273,11 +273,11 @@ class ExternalDisplay: Display {
     return max == 0 ? 100 : max
   }
 
-  func getRestoreValue(for command: DDCCommand) -> Int {
+  func getRestoreValue(for command: DDCControl) -> Int {
     return self.prefs.integer(forKey: "restore-\(command.rawValue)-\(self.identifier)")
   }
 
-  func setRestoreValue(_ value: Int?, for command: DDCCommand) {
+  func setRestoreValue(_ value: Int?, for command: DDCControl) {
     self.prefs.set(value, forKey: "restore-\(command)-\(self.identifier)")
   }
 
@@ -321,17 +321,17 @@ class ExternalDisplay: Display {
     self.prefs.set(value, forKey: "pollingCount-\(self.identifier)")
   }
 
-  private func stepSize(for command: DDCCommand, isSmallIncrement: Bool) -> Int {
+  private func stepSize(for command: DDCControl, isSmallIncrement: Bool) -> Int {
     return isSmallIncrement ? 1 : Int(floor(Float(self.getMaxValue(for: command)) / self.osdChicletBoxes))
   }
 
-  override func showOsd(command: DDCCommand, value: Int, maxValue _: Int = 100) {
+  override func showOsd(command: DDCControl, value: Int, maxValue _: Int = 100) {
     super.showOsd(command: command, value: value, maxValue: self.getMaxValue(for: command))
   }
 
   private func supportsMuteCommand() -> Bool {
     // Monitors which don't support the mute command - e.g. Dell U3419W - will have a maximum value of 100 for the DDC mute command
-    return self.getMaxValue(for: DDCCommand.AUDIO_MUTE) == 2
+    return self.getMaxValue(for: DDCControl.AUDIO_MUTE) == 2
   }
 
   private func playVolumeChangedSound() {

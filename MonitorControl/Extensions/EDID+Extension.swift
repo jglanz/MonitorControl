@@ -1,4 +1,4 @@
-import DDC
+import ddc
 
 // extension EDID {
 //  public func displayName() -> String? {

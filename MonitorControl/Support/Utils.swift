@@ -1,5 +1,5 @@
 import Cocoa
-import DDC
+import ddc
 import os.log
 import ServiceManagement
 
@@ -14,7 +14,7 @@ class Utils: NSObject {
   ///   - command: Command (Brightness/Volume/...)
   ///   - title: Title of the slider
   /// - Returns: An `NSSlider` slider
-  static func addSliderMenuItem(toMenu menu: NSMenu, forDisplay display: ExternalDisplay, command: DDCCommand, title: String) -> SliderHandler {
+  static func addSliderMenuItem(toMenu menu: NSMenu, forDisplay display: ExternalDisplay, command: DDCControl, title: String) -> SliderHandler {
     let item = NSMenuItem()
 
     let handler = SliderHandler(display: display, command: command)
@@ -61,7 +61,7 @@ class Utils: NSObject {
       var muteValues: (current: UInt16, max: UInt16)?
 
       os_log("Polling %{public}@ times", type: .info, String(tries))
-      // os_log("%{public}@ (%{public}@):", type: .info, display.name, String(reflecting: DDCCommand.AUDIO_MUTE))
+      // os_log("%{public}@ (%{public}@):", type: .info, display.name, String(reflecting: DDCControl.AUDIO_MUTE))
 
       if tries != 0 {
         muteValues = display.readDDCValues(for: .AUDIO_MUTE, tries: tries, minReplyDelay: delay)
@@ -75,7 +75,7 @@ class Utils: NSObject {
         display.saveMaxValue(Int(muteValues.max), for: .AUDIO_MUTE)
       } else {
         os_log(" - current ddc value: unknown", type: .info)
-        os_log(" - stored maximum ddc value: %{public}@", type: .info, String(display.getMaxValue(for: DDCCommand.AUDIO_MUTE.rawValue)))
+        os_log(" - stored maximum ddc value: %{public}@", type: .info, String(display.getMaxValue(for: DDCControl.AUDIO_MUTE.rawValue)))
       }
 
       // If the system is not currently muted, or doesn't support the mute command, display the current volume as the slider value

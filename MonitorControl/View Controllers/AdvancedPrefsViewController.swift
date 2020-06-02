@@ -1,5 +1,5 @@
 import Cocoa
-import DDC
+import ddc
 import MASPreferences
 import os.log
 

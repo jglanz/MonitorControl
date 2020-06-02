@@ -1,5 +1,5 @@
 import Cocoa
-import DDC
+import ddc
 import os.log
 class FriendlyNameCellView: NSTableCellView {
   var display: Display?
