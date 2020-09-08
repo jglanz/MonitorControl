@@ -49,9 +49,11 @@ extension NSScreen {
 
       if dict[kDisplayVendorID] as? UInt32 == self.vendorNumber,
         dict[kDisplayProductID] as? UInt32 == self.modelNumber,
-        dict[kDisplaySerialNumber] as? UInt32 == self.serialNumber {
+        dict[kDisplaySerialNumber] as? UInt32 == self.serialNumber
+      {
         if let productName = dict["DisplayProductName"] as? [String: String],
-          let firstKey = Array(productName.keys).first {
+          let firstKey = Array(productName.keys).first
+        {
           return productName[firstKey]!
         }
       }

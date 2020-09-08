@@ -30,7 +30,7 @@ class LongerDelayCellView: NSTableCellView {
           } else {
             sender.state = .off
           }
-          })
+        })
       }
 //      case .off:
 //        display.needsLongerDelay = false

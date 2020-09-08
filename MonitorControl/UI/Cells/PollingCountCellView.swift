@@ -15,7 +15,8 @@ class PollingCountCellView: NSTableCellView {
 
       if newValue != originalValue,
         !newValue.isEmpty,
-        let newValue = Int(newValue) {
+        let newValue = Int(newValue)
+      {
         display.setPollingCount(newValue)
         os_log("Value changed for polling count: %{public}@", type: .info, "from `\(originalValue)` to `\(newValue)`")
       }
