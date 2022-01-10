@@ -107,8 +107,6 @@ class Utils: NSObject {
       alert.alertStyle = .warning
       alert.runModal()
     }
-
-    return
   }
 
   static func setStartAtLogin(enabled: Bool) {

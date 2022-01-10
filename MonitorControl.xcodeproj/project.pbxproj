@@ -13,8 +13,6 @@
 		28D1DDD8227FB7A4004CB494 /* OSD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0A987D61F77B290009B603D /* OSD.framework */; };
 		28D1DDE5227FB7D0004CB494 /* MediaKeyTap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE2227FB7D0004CB494 /* MediaKeyTap.framework */; };
 		28D1DDE6227FB7D0004CB494 /* MediaKeyTap.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE2227FB7D0004CB494 /* MediaKeyTap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		28D1DDE7227FB7D0004CB494 /* AMCoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE3227FB7D0004CB494 /* AMCoreAudio.framework */; };
-		28D1DDE8227FB7D0004CB494 /* AMCoreAudio.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE3227FB7D0004CB494 /* AMCoreAudio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28D1DDE9227FB7D0004CB494 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE4227FB7D0004CB494 /* MASPreferences.framework */; };
 		28D1DDEA227FB7D0004CB494 /* MASPreferences.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE4227FB7D0004CB494 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28D1DDF0227FBD99004CB494 /* EDID+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D1DDEC227FB8F2004CB494 /* EDID+Extension.swift */; };
@@ -22,7 +20,6 @@
 		28D1DDF3227FC8C6004CB494 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56754EB01D9A4016007BCDC5 /* Assets.xcassets */; };
 		28D1DE12227FD006004CB494 /* MASPreferences.framework.dSYM in [Carthage] Copy Framework Debug Symbols */ = {isa = PBXBuildFile; fileRef = 28D1DE0E227FD005004CB494 /* MASPreferences.framework.dSYM */; };
 		28D1DE13227FD006004CB494 /* MediaKeyTap.framework.dSYM in [Carthage] Copy Framework Debug Symbols */ = {isa = PBXBuildFile; fileRef = 28D1DE0F227FD006004CB494 /* MediaKeyTap.framework.dSYM */; };
-		28D1DE14227FD006004CB494 /* AMCoreAudio.framework.dSYM in [Carthage] Copy Framework Debug Symbols */ = {isa = PBXBuildFile; fileRef = 28D1DE10227FD006004CB494 /* AMCoreAudio.framework.dSYM */; };
 		56754EAF1D9A4016007BCDC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56754EAE1D9A4016007BCDC5 /* AppDelegate.swift */; };
 		56754EB11D9A4016007BCDC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56754EB01D9A4016007BCDC5 /* Assets.xcassets */; };
 		6C0CCB26228F4F720037D2C5 /* AdvancedPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0CCB25228F4F720037D2C5 /* AdvancedPrefsViewController.swift */; };
@@ -91,7 +88,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				07DBAD422485574A00CB750E /* ddc.framework in [Carthage] Embed Frameworks */,
-				28D1DDE8227FB7D0004CB494 /* AMCoreAudio.framework in [Carthage] Embed Frameworks */,
 				28D1DDEA227FB7D0004CB494 /* MASPreferences.framework in [Carthage] Embed Frameworks */,
 				28D1DDE6227FB7D0004CB494 /* MediaKeyTap.framework in [Carthage] Embed Frameworks */,
 			);
@@ -104,7 +100,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				28D1DE14227FD006004CB494 /* AMCoreAudio.framework.dSYM in [Carthage] Copy Framework Debug Symbols */,
 				28D1DE12227FD006004CB494 /* MASPreferences.framework.dSYM in [Carthage] Copy Framework Debug Symbols */,
 				28D1DE13227FD006004CB494 /* MediaKeyTap.framework.dSYM in [Carthage] Copy Framework Debug Symbols */,
 			);
@@ -197,7 +192,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				076DA6E82486B829006BB4C4 /* ddc.framework in Frameworks */,
-				28D1DDE7227FB7D0004CB494 /* AMCoreAudio.framework in Frameworks */,
 				28D1DDE9227FB7D0004CB494 /* MASPreferences.framework in Frameworks */,
 				28D1DDE5227FB7D0004CB494 /* MediaKeyTap.framework in Frameworks */,
 				28D1DDD8227FB7A4004CB494 /* OSD.framework in Frameworks */,
@@ -416,7 +410,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Guillaume Broder";
 				TargetAttributes = {
 					56754EAA1D9A4016007BCDC5 = {
@@ -681,6 +675,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -702,6 +697,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -741,6 +737,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -762,6 +759,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -794,7 +792,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MonitorControl/MonitorControl.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 631;
@@ -808,7 +805,7 @@
 				);
 				INFOPLIST_FILE = MonitorControl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.densebrain.MonitorControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -823,7 +820,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MonitorControl/MonitorControl.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 631;
@@ -837,7 +833,7 @@
 				);
 				INFOPLIST_FILE = MonitorControl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.densebrain.MonitorControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -855,7 +851,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = MonitorControlHelper/MonitorControlHelper.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 631;
@@ -880,7 +875,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = MonitorControlHelper/MonitorControlHelper.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 631;

@@ -1,4 +1,4 @@
-import AMCoreAudio
+// import AMCoreAudio
 import Cocoa
 import ddc
 import Foundation
@@ -144,7 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   private func setupViewControllers() {
-    let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: Bundle.main)
+    let storyboard = NSStoryboard(name: "Main", bundle: Bundle.main)
     let mainPrefsVc = storyboard.instantiateController(withIdentifier: "MainPrefsVC")
     let keyPrefsVc = storyboard.instantiateController(withIdentifier: "KeysPrefsVC")
     let displayPrefsVc = storyboard.instantiateController(withIdentifier: "DisplayPrefsVC")
@@ -165,8 +165,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     NotificationCenter.default.addObserver(self, selector: #selector(handleFriendlyNameChanged), name: .friendlyName, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(handlePreferenceReset), name: .preferenceReset, object: nil)
 
-    // subscribe Audio output detector (AMCoreAudio)
-    AMCoreAudio.NotificationCenter.defaultCenter.subscribe(self, eventType: AudioHardwareEvent.self, dispatchQueue: DispatchQueue.main)
+//    // subscribe Audio output detector (AMCoreAudio)
+//    AMCoreAudio.NotificationCenter.defaultCenter.subscribe(self, eventType: AudioHardwareEvent.self, dispatchQueue: DispatchQueue.main)
 
     // listen for accessibility status changes
     _ = DistributedNotificationCenter.default().addObserver(forName: .accessibilityApi, object: nil, queue: nil) { _ in
@@ -284,29 +284,29 @@ extension AppDelegate: MediaKeyTapDelegate {
       keys = [.brightnessUp, .brightnessDown, .mute, .volumeUp, .volumeDown]
     }
 
-    if let audioDevice = AudioDevice.defaultOutputDevice(), audioDevice.canSetVirtualMasterVolume(direction: .playback) {
-      // Remove volume related keys.
-      let keysToDelete: [MediaKey] = [.volumeUp, .volumeDown, .mute]
-      keys.removeAll { keysToDelete.contains($0) }
-    }
-    self.mediaKeyTap?.stop()
-    // returning an empty array listens for all mediakeys in MediaKeyTap
-    if keys.count > 0 {
-      self.mediaKeyTap = MediaKeyTap(delegate: self, for: keys, observeBuiltIn: false)
-      self.mediaKeyTap?.start()
-    }
+//    if let audioDevice = AudioDevice.defaultOutputDevice(), audioDevice.canSetVirtualMasterVolume(direction: .playback) {
+//      // Remove volume related keys.
+//      let keysToDelete: [MediaKey] = [.volumeUp, .volumeDown, .mute]
+//      keys.removeAll { keysToDelete.contains($0) }
+//    }
+//    self.mediaKeyTap?.stop()
+//    // returning an empty array listens for all mediakeys in MediaKeyTap
+//    if keys.count > 0 {
+//      self.mediaKeyTap = MediaKeyTap(delegate: self, for: keys, observeBuiltIn: false)
+//      self.mediaKeyTap?.start()
+//    }
   }
 }
 
-extension AppDelegate: EventSubscriber {
-  /// Fires off when the default audio device changes.
-  func eventReceiver(_ event: Event) {
-    if case let .defaultOutputDeviceChanged(audioDevice)? = event as? AudioHardwareEvent {
-      #if DEBUG
-        os_log("Default output device changed to “%{public}@”.", type: .info, audioDevice.name)
-        os_log("Can device set its own volume? %{public}@", type: .info, audioDevice.canSetVirtualMasterVolume(direction: .playback).description)
-      #endif
-      self.updateMediaKeyTap()
-    }
-  }
-}
+// extension AppDelegate: EventSubscriber {
+//  /// Fires off when the default audio device changes.
+//  func eventReceiver(_ event: Event) {
+//    if case let .defaultOutputDeviceChanged(audioDevice)? = event as? AudioHardwareEvent {
+//      #if DEBUG
+//        os_log("Default output device changed to “%{public}@”.", type: .info, audioDevice.name)
+//        os_log("Can device set its own volume? %{public}@", type: .info, audioDevice.canSetVirtualMasterVolume(direction: .playback).description)
+//      #endif
+//      self.updateMediaKeyTap()
+//    }
+//  }
+// }
