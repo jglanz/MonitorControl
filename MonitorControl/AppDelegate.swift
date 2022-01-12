@@ -1,3 +1,4 @@
+// import AMCoreAudio
 import Cocoa
 import ddc
 import SwiftUI
@@ -144,7 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   private func setupViewControllers() {
-    let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: Bundle.main)
+    let storyboard = NSStoryboard(name: "Main", bundle: Bundle.main)
     let mainPrefsVc = storyboard.instantiateController(withIdentifier: "MainPrefsVC")
     let keyPrefsVc = storyboard.instantiateController(withIdentifier: "KeysPrefsVC")
     let displayPrefsVc = storyboard.instantiateController(withIdentifier: "DisplayPrefsVC")
@@ -298,7 +299,7 @@ extension AppDelegate: MediaKeyTapDelegate {
   }
 }
 
-//extension AppDelegate: EventSubscriber {
+// extension AppDelegate: EventSubscriber {
 //  /// Fires off when the default audio device changes.
 //  func eventReceiver(_ event: Event) {
 //    if case let .defaultOutputDeviceChanged(audioDevice)? = event as? AudioHardwareEvent {

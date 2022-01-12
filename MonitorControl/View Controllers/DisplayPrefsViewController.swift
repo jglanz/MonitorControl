@@ -68,8 +68,8 @@ class DisplayPrefsViewController: NSViewController, MASPreferencesViewController
 
   func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
     guard let tableColumn = tableColumn,
-      let columnIndex = tableView.tableColumns.firstIndex(of: tableColumn),
-      let column = DisplayColumn(rawValue: columnIndex)
+          let columnIndex = tableView.tableColumns.firstIndex(of: tableColumn),
+          let column = DisplayColumn(rawValue: columnIndex)
     else {
       return nil
     }
