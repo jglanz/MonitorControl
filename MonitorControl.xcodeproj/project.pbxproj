@@ -3,18 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		076DA6E82486B829006BB4C4 /* ddc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AEBB1D24847E9400909494 /* ddc.framework */; };
+		078B8CF42766A33F00F2DFF8 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 078B8CEF2766A32000F2DFF8 /* SwiftUI.framework */; platformFilter = maccatalyst; };
+		078B8CF52766A33F00F2DFF8 /* SwiftUI.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 078B8CEF2766A32000F2DFF8 /* SwiftUI.framework */; platformFilter = maccatalyst; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		07DBAD422485574A00CB750E /* ddc.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 07AEBB1D24847E9400909494 /* ddc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2894D9B82280B30500DF58DA /* CGDirectDisplayID+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2894D9B72280B30500DF58DA /* CGDirectDisplayID+Extension.swift */; };
-		28D1DDD8227FB7A4004CB494 /* OSD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0A987D61F77B290009B603D /* OSD.framework */; };
 		28D1DDE5227FB7D0004CB494 /* MediaKeyTap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE2227FB7D0004CB494 /* MediaKeyTap.framework */; };
 		28D1DDE6227FB7D0004CB494 /* MediaKeyTap.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE2227FB7D0004CB494 /* MediaKeyTap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		28D1DDE7227FB7D0004CB494 /* AMCoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE3227FB7D0004CB494 /* AMCoreAudio.framework */; };
-		28D1DDE8227FB7D0004CB494 /* AMCoreAudio.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE3227FB7D0004CB494 /* AMCoreAudio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28D1DDE9227FB7D0004CB494 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE4227FB7D0004CB494 /* MASPreferences.framework */; };
 		28D1DDEA227FB7D0004CB494 /* MASPreferences.framework in [Carthage] Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28D1DDE4227FB7D0004CB494 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28D1DDF0227FBD99004CB494 /* EDID+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D1DDEC227FB8F2004CB494 /* EDID+Extension.swift */; };
@@ -22,7 +21,6 @@
 		28D1DDF3227FC8C6004CB494 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56754EB01D9A4016007BCDC5 /* Assets.xcassets */; };
 		28D1DE12227FD006004CB494 /* MASPreferences.framework.dSYM in [Carthage] Copy Framework Debug Symbols */ = {isa = PBXBuildFile; fileRef = 28D1DE0E227FD005004CB494 /* MASPreferences.framework.dSYM */; };
 		28D1DE13227FD006004CB494 /* MediaKeyTap.framework.dSYM in [Carthage] Copy Framework Debug Symbols */ = {isa = PBXBuildFile; fileRef = 28D1DE0F227FD006004CB494 /* MediaKeyTap.framework.dSYM */; };
-		28D1DE14227FD006004CB494 /* AMCoreAudio.framework.dSYM in [Carthage] Copy Framework Debug Symbols */ = {isa = PBXBuildFile; fileRef = 28D1DE10227FD006004CB494 /* AMCoreAudio.framework.dSYM */; };
 		56754EAF1D9A4016007BCDC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56754EAE1D9A4016007BCDC5 /* AppDelegate.swift */; };
 		56754EB11D9A4016007BCDC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56754EB01D9A4016007BCDC5 /* Assets.xcassets */; };
 		6C0CCB26228F4F720037D2C5 /* AdvancedPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0CCB25228F4F720037D2C5 /* AdvancedPrefsViewController.swift */; };
@@ -91,8 +89,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				07DBAD422485574A00CB750E /* ddc.framework in [Carthage] Embed Frameworks */,
-				28D1DDE8227FB7D0004CB494 /* AMCoreAudio.framework in [Carthage] Embed Frameworks */,
 				28D1DDEA227FB7D0004CB494 /* MASPreferences.framework in [Carthage] Embed Frameworks */,
+				078B8CF52766A33F00F2DFF8 /* SwiftUI.framework in [Carthage] Embed Frameworks */,
 				28D1DDE6227FB7D0004CB494 /* MediaKeyTap.framework in [Carthage] Embed Frameworks */,
 			);
 			name = "[Carthage] Embed Frameworks";
@@ -104,7 +102,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				28D1DE14227FD006004CB494 /* AMCoreAudio.framework.dSYM in [Carthage] Copy Framework Debug Symbols */,
 				28D1DE12227FD006004CB494 /* MASPreferences.framework.dSYM in [Carthage] Copy Framework Debug Symbols */,
 				28D1DE13227FD006004CB494 /* MediaKeyTap.framework.dSYM in [Carthage] Copy Framework Debug Symbols */,
 			);
@@ -126,6 +123,8 @@
 
 /* Begin PBXFileReference section */
 		072B6503245E6FE400922964 /* MonitorControl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonitorControl.entitlements; sourceTree = "<group>"; };
+		078B8CEF2766A32000F2DFF8 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		078B8CF62766A3E000F2DFF8 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		07AEBB1824847E9400909494 /* DDC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DDC.xcodeproj; path = ../ddcctl/DDC.xcodeproj; sourceTree = "<group>"; };
 		1E7ECF3F22A4552400E4E701 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1E7ECF4022A4552B00E4E701 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Main.strings; sourceTree = "<group>"; };
@@ -197,10 +196,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				076DA6E82486B829006BB4C4 /* ddc.framework in Frameworks */,
-				28D1DDE7227FB7D0004CB494 /* AMCoreAudio.framework in Frameworks */,
 				28D1DDE9227FB7D0004CB494 /* MASPreferences.framework in Frameworks */,
+				078B8CF42766A33F00F2DFF8 /* SwiftUI.framework in Frameworks */,
 				28D1DDE5227FB7D0004CB494 /* MediaKeyTap.framework in Frameworks */,
-				28D1DDD8227FB7A4004CB494 /* OSD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +224,7 @@
 		28D1DDD1227FB759004CB494 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				078B8CEF2766A32000F2DFF8 /* SwiftUI.framework */,
 				28D1DDE3227FB7D0004CB494 /* AMCoreAudio.framework */,
 				28D1DE10227FD006004CB494 /* AMCoreAudio.framework.dSYM */,
 				28D1DDE4227FB7D0004CB494 /* MASPreferences.framework */,
@@ -252,6 +251,7 @@
 		56754EA21D9A4016007BCDC5 = {
 			isa = PBXGroup;
 			children = (
+				078B8CF62766A3E000F2DFF8 /* Cartfile */,
 				07AEBB1824847E9400909494 /* DDC.xcodeproj */,
 				28D1DDD1227FB759004CB494 /* Frameworks */,
 				56754EAD1D9A4016007BCDC5 /* MonitorControl */,
@@ -785,7 +785,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
@@ -807,7 +808,10 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = MonitorControl/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.densebrain.MonitorControl;
@@ -836,7 +840,10 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = MonitorControl/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.densebrain.MonitorControl;
@@ -863,7 +870,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = MonitorControlHelper/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.densebrain.MonitorControlHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -888,7 +898,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = MonitorControlHelper/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.densebrain.MonitorControlHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";

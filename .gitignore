@@ -4,3 +4,4 @@ Carthage
 /.idea/markdown*
 /build/
 /DerivedData/
+.DS_Store
